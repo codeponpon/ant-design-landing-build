@@ -109,14 +109,14 @@ async function deploy(ctx, next) {
       builds: [
         {
           src: 'package.json',
-          use: '@now/static-build',
+          use: '@vercel/static-build',
           config: {
             distDir: 'dist',
           },
         },
       ],
       alias: [
-        `${name}.antdlanding.now.sh`
+        `${name}.verce.app`
       ]
     },
   };

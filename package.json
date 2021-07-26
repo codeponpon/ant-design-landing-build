@@ -16,7 +16,7 @@
   },
   "scripts": {
     "dev": "NODE_ENV=development nodemon src/index.js",
-    "deploy": "now --global-config ."
+    "deploy": "vercel --global-config ."
   },
   "devDependencies": {
     "@types/koa": "^2.0.48",
