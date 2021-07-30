@@ -103,7 +103,7 @@ async function deploy(ctx, next) {
     data: {
       // 一个站点一个 name
       name: deployData.name,
-      public: false,
+      public: true,
       version: 2,
       files: concatFiles,
       builds: [
@@ -115,6 +115,8 @@ async function deploy(ctx, next) {
           },
         },
       ],
+      env: {name: "PROJECT_NAME", value: deployData.name},
+      target: "production",
       alias: [
         `${name}.verce.app`
       ]

@@ -14,8 +14,14 @@ async function queryDeploy(ctx, next) {
       Authorization: `Bearer ${now.token}`,
     },
   })
+  // STATUS are "READY" or  "BUILDING"
+  // Example:
+  // "status": "READY",
+  // "status": "BUILDING",
+  console.log('------res-', res);
   ctx.status = 200;
   ctx.body = res.data;
+  console.log("BODY", ctx.body);
 }
 
 module.exports = queryDeploy;
