@@ -3,20 +3,23 @@ const nunjucks = require('nunjucks');
 const path = require('path');
 const { HttpClient2 } = require('urllib');
 const Parameter = require('parameter');
+const app_url = "https://nextetor.vercel.app/";
 
 async function deploy(ctx, next) {
   const { now } = ctx.config;
-  const { token, url, templateDir, whiteList } = now;
-  nunjucks.configure(templateDir);
-  const pkgTmp = path.join(templateDir, 'package.json');
-  const umiTmp = path.join(templateDir, 'umirc');
-  const nowIgnoreTmp = path.join(templateDir, 'nowignore');
+  const { token, url, templateDirNext, whiteList } = now;
+
+  nunjucks.configure(templateDirNext);
+  const pkgTmp = path.join(templateDirNext, 'package.json');
+  const nextTmp = path.join(templateDirNext, 'next.config.js');
+  const nowIgnoreTmp = path.join(templateDirNext, 'vercelignore');
 
   const parameter = new Parameter({
     validateRoot: true,
   });
 
   const {
+    id,
     name,
     files,
   } = ctx.request.body;
@@ -69,7 +72,10 @@ async function deploy(ctx, next) {
   const pkgContent = nunjucks.render(pkgTmp, {
     name: deployData.name,
   });
-  const umiContent = nunjucks.render(umiTmp);
+  const nextContent = nunjucks.render(nextTmp, {
+    app_url: app_url,
+    game_id: id
+  });
   const nowIgnoreContent = nunjucks.render(nowIgnoreTmp);
 
   console.log('---deployData.files-', deployData.files, typeof deployData.files);
@@ -79,13 +85,13 @@ async function deploy(ctx, next) {
       data: pkgContent,
     },
     {
-      file: '.umirc.js',
-      data: umiContent,
+      file: "next.config.js",
+      data: nextContent,
     },
-    {
-      file: '.nowignore',
-      data: nowIgnoreContent,
-    },
+    // {
+    //   file: '.vercelignore',
+    //   data: nowIgnoreContent,
+    // },
   ];
   const filterFiles = deployData.files.filter((file) => !solidFiles.map(item => item.file).includes(file.file));
 
@@ -110,11 +116,14 @@ async function deploy(ctx, next) {
           src: 'package.json',
           use: '@vercel/static-build',
           config: {
-            distDir: 'dist',
+            distDir: './out',
           },
         },
       ],
-      env: {name: "PROJECT_NAME", value: deployData.name},
+      env: {
+        name: "PROJECT_NAME",
+        value: deployData.name
+      },
       target: "production",
       alias: [
         `${name}.verce.app`
