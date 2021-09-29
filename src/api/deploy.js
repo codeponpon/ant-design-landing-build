@@ -1,4 +1,3 @@
-
 const nunjucks = require('nunjucks');
 const path = require('path');
 const { HttpClient2 } = require('urllib');
@@ -16,10 +15,7 @@ async function deploy(ctx, next) {
     validateRoot: true,
   });
 
-  const {
-    name,
-    files,
-  } = ctx.request.body;
+  const { name, files } = ctx.request.body;
   // console.log('------ctx.request.body-', ctx.request.body);
   const isIncludeName = whiteList.includes(name);
 
@@ -28,7 +24,7 @@ async function deploy(ctx, next) {
     ctx.body = {
       status: 400,
       error: 'Params name error',
-    }
+    };
     return false;
   }
   const deployData = {
@@ -62,7 +58,7 @@ async function deploy(ctx, next) {
     ctx.body = {
       status: 400,
       error: 'Params error',
-    }
+    };
     return false;
   }
 
@@ -72,7 +68,11 @@ async function deploy(ctx, next) {
   const umiContent = nunjucks.render(umiTmp);
   const nowIgnoreContent = nunjucks.render(nowIgnoreTmp);
 
-  console.log('---deployData.files-', deployData.files, typeof deployData.files);
+  console.log(
+    '---deployData.files-',
+    deployData.files,
+    typeof deployData.files
+  );
   const solidFiles = [
     {
       file: 'package.json',
@@ -87,7 +87,9 @@ async function deploy(ctx, next) {
       data: nowIgnoreContent,
     },
   ];
-  const filterFiles = deployData.files.filter((file) => !solidFiles.map(item => item.file).includes(file.file));
+  const filterFiles = deployData.files.filter(
+    (file) => !solidFiles.map((item) => item.file).includes(file.file)
+  );
 
   const concatFiles = solidFiles.concat(filterFiles);
   console.log('---concatFiles-', concatFiles);
@@ -114,11 +116,9 @@ async function deploy(ctx, next) {
           },
         },
       ],
-      env: {name: "PROJECT_NAME", value: deployData.name},
-      target: "production",
-      alias: [
-        `${name}.verce.app`
-      ]
+      env: { name: 'PROJECT_NAME', value: deployData.name },
+      target: 'production',
+      alias: [`${name}.verce.app`],
     },
   };
 

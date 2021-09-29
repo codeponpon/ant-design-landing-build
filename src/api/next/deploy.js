@@ -1,9 +1,8 @@
-
 const nunjucks = require('nunjucks');
 const path = require('path');
 const { HttpClient2 } = require('urllib');
 const Parameter = require('parameter');
-const app_url = "https://nextetor.vercel.app/";
+const app_url = 'https://nextetor.vercel.app/';
 
 async function deploy(ctx, next) {
   const { now } = ctx.config;
@@ -18,11 +17,7 @@ async function deploy(ctx, next) {
     validateRoot: true,
   });
 
-  const {
-    id,
-    name,
-    files,
-  } = ctx.request.body;
+  const { id, name, files } = ctx.request.body;
   // console.log('------ctx.request.body-', ctx.request.body);
   const isIncludeName = whiteList.includes(name);
 
@@ -31,7 +26,7 @@ async function deploy(ctx, next) {
     ctx.body = {
       status: 400,
       error: 'Params name error',
-    }
+    };
     return false;
   }
   const deployData = {
@@ -65,7 +60,7 @@ async function deploy(ctx, next) {
     ctx.body = {
       status: 400,
       error: 'Params error',
-    }
+    };
     return false;
   }
 
@@ -74,18 +69,22 @@ async function deploy(ctx, next) {
   });
   const nextContent = nunjucks.render(nextTmp, {
     app_url: app_url,
-    game_id: id
+    game_id: id,
   });
   const nowIgnoreContent = nunjucks.render(nowIgnoreTmp);
 
-  console.log('---deployData.files-', deployData.files, typeof deployData.files);
+  console.log(
+    '---deployData.files-',
+    deployData.files,
+    typeof deployData.files
+  );
   const solidFiles = [
     {
       file: 'package.json',
       data: pkgContent,
     },
     {
-      file: "next.config.js",
+      file: 'next.config.js',
       data: nextContent,
     },
     // {
@@ -93,7 +92,9 @@ async function deploy(ctx, next) {
     //   data: nowIgnoreContent,
     // },
   ];
-  const filterFiles = deployData.files.filter((file) => !solidFiles.map(item => item.file).includes(file.file));
+  const filterFiles = deployData.files.filter(
+    (file) => !solidFiles.map((item) => item.file).includes(file.file)
+  );
 
   const concatFiles = solidFiles.concat(filterFiles);
   console.log('---concatFiles-', concatFiles);
@@ -121,19 +122,17 @@ async function deploy(ctx, next) {
         },
       ],
       env: {
-        name: "PROJECT_NAME",
-        value: deployData.name
+        name: 'PROJECT_NAME',
+        value: deployData.name,
       },
-      target: "production",
-      alias: [
-        `${name}.verce.app`
-      ]
+      target: 'production',
+      alias: [`${name}.verce.app`],
     },
   };
 
   const client = new HttpClient2();
   const res = await client.request(`${url}/deployments`, settings);
-  console.log('------res-', res);
+  // console.log('------res-', res);
   ctx.status = 200;
   ctx.body = res.data;
 }

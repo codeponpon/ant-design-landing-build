@@ -1,14 +1,17 @@
 export default {
-  disableCSSModules: true,
-  plugins: [
-    [
-      'umi-plugin-react', {
-        antd: true,
-        dva: false,
-      }
-    ],
-  ],
+  ssr: {},
+  antd: {},
+  exportStatic: {},
   targets: {
     ie: 11,
   },
-}
+  fastRefresh: {},
+  lessLoader: {
+    rules: [
+      {
+        test: /\.less$/i,
+        loader: ['style-loader', 'css-loader', 'less-loader'],
+      },
+    ],
+  },
+};

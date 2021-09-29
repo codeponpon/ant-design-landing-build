@@ -1,5 +1,3 @@
-
-
 const { HttpClient2 } = require('urllib');
 
 async function queryDeploy(ctx, next) {
@@ -13,15 +11,15 @@ async function queryDeploy(ctx, next) {
     headers: {
       Authorization: `Bearer ${now.token}`,
     },
-  })
+  });
   // STATUS are "READY" or  "BUILDING"
   // Example:
   // "status": "READY",
   // "status": "BUILDING",
-  console.log('------res-', res);
+  // console.log('------res-', res);
   ctx.status = 200;
   ctx.body = res.data;
-  console.log("BODY", ctx.body);
+  console.log('BODY', ctx.body);
 }
 
 module.exports = queryDeploy;
