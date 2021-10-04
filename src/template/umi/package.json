@@ -1,5 +1,5 @@
 {
-  "name": "WebGen",
+  "name": "{{ name }}",
   "private": true,
   "scripts": {
     "start": "vercel",
