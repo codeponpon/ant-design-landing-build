@@ -12,7 +12,7 @@ import RegisterComp from './registerComp';
 import { SIGN_IN } from '../gql/signIn';
 
 const LoginComp = (props) => {
-  const { isMobile, registerHistory = false } = props;
+  const { isMobile, registerHistory = false, ...attrs } = props;
   const [signIn] = useMutation(SIGN_IN);
   const [loading, setLoading] = useState(false);
   const [registerChildrenDrawer, setRegisterChildrenDrawer] = useState(false);
@@ -113,6 +113,7 @@ const LoginComp = (props) => {
               width={isMobile ? '100%' : '400px'}
               onClose={() => setRegisterChildrenDrawer(false)}
               visible={registerChildrenDrawer}
+              {...attrs}
             >
               <RegisterComp loginHistory={true} />
             </Drawer>
