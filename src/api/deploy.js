@@ -2,6 +2,7 @@ const nunjucks = require('nunjucks');
 const path = require('path');
 const { HttpClient2 } = require('urllib');
 const Parameter = require('parameter');
+const fs = require('fs');
 
 async function deploy(ctx, next) {
   const { now } = ctx.config;
@@ -38,6 +39,19 @@ async function deploy(ctx, next) {
     'providerList.jsx'
   );
   const registerComp = path.join(templateDir, 'components', 'registerComp.jsx');
+
+  // GQL
+  const banksGql = path.join(templateDir, 'gql', 'banks.js');
+  const gameProvidersGql = path.join(templateDir, 'gql', 'gameProviders.js');
+  const getPromotionListGql = path.join(
+    templateDir,
+    'gql',
+    'getPromotionLists.js'
+  );
+  const launchGamesGql = path.join(templateDir, 'gql', 'launchGames.js');
+  const signInGql = path.join(templateDir, 'gql', 'signIn.js');
+  const userMeGql = path.join(templateDir, 'gql', 'userMe.js');
+  const walletGql = path.join(templateDir, 'gql', 'wallet.js');
 
   const parameter = new Parameter({
     validateRoot: true,
@@ -97,23 +111,32 @@ async function deploy(ctx, next) {
   const nowIgnoreContent = nunjucks.render(nowIgnoreTmp);
 
   // Apollo
-  const apolloIndexContent = nunjucks.render(apolloIndex);
+  const apolloIndexContent = fs.readFileSync(apolloIndex, 'utf-8');
+
+  // GQL
+  const banksContent = fs.readFileSync(banksGql, 'utf-8');
+  const gameProvidersContent = fs.readFileSync(gameProvidersGql, 'utf-8');
+  const getPromotionListContent = fs.readFileSync(getPromotionListGql, 'utf-8');
+  const launchGamesContent = fs.readFileSync(launchGamesGql, 'utf-8');
+  const signInContent = fs.readFileSync(signInGql, 'utf-8');
+  const userMeContent = fs.readFileSync(userMeGql, 'utf-8');
+  const walletContent = fs.readFileSync(walletGql, 'utf-8');
 
   // Library
-  const libFormatIndexContent = nunjucks.render(libFormatIndex);
-  const libFormatBalanceContent = nunjucks.render(libFormatBalance);
-  const libAuthTokenContent = nunjucks.render(libAuthToken);
-  const libCreditContent = nunjucks.render(libCredit);
-  const libWaitTimeContent = nunjucks.render(libWaitTime);
-  const libUseAuthContent = nunjucks.render(libUseAuth);
+  const libFormatIndexContent = fs.readFileSync(libFormatIndex, 'utf-8');
+  const libFormatBalanceContent = fs.readFileSync(libFormatBalance, 'utf-8');
+  const libAuthTokenContent = fs.readFileSync(libAuthToken, 'utf-8');
+  const libCreditContent = fs.readFileSync(libCredit, 'utf-8');
+  const libWaitTimeContent = fs.readFileSync(libWaitTime, 'utf-8');
+  const libUseAuthContent = fs.readFileSync(libUseAuth, 'utf-8');
 
   // Components
-  const accountCompContent = nunjucks.render(accountComp);
-  const bankSelectorContent = nunjucks.render(bankSelector);
-  const gameListCompContent = nunjucks.render(gameListComp);
-  const loginCompContent = nunjucks.render(loginComp);
-  const providerListCompContent = nunjucks.render(providerListComp);
-  const registerCompContent = nunjucks.render(registerComp);
+  const accountCompContent = fs.readFileSync(accountComp, 'utf-8');
+  const bankSelectorContent = fs.readFileSync(bankSelector, 'utf-8');
+  const gameListCompContent = fs.readFileSync(gameListComp, 'utf-8');
+  const loginCompContent = fs.readFileSync(loginComp, 'utf-8');
+  const providerListCompContent = fs.readFileSync(providerListComp, 'utf-8');
+  const registerCompContent = fs.readFileSync(registerComp, 'utf-8');
 
   console.log(
     '---deployData.files-',
@@ -121,6 +144,13 @@ async function deploy(ctx, next) {
     typeof deployData.files
   );
   const solidFiles = [
+    { file: 'src/gql/banks.js', data: banksContent },
+    { file: 'src/gql/gameProviders.js', data: gameProvidersContent },
+    { file: 'src/gql/getPromotionLists.js', data: getPromotionListContent },
+    { file: 'src/gql/launchGames.js', data: launchGamesContent },
+    { file: 'src/gql/signIn.js', data: signInContent },
+    { file: 'src/gql/userMe.js', data: userMeContent },
+    { file: 'src/gql/wallet.js', data: walletContent },
     { file: 'src/apollo/index.js', data: apolloIndexContent },
     { file: 'src/libs/format/index.js', data: libFormatIndexContent },
     { file: 'src/libs/format/balance.js', data: libFormatBalanceContent },

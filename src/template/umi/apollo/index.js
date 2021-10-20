@@ -3,14 +3,11 @@ import { setContext } from '@apollo/client/link/context';
 import { getToken } from '../libs/authToken';
 
 const httpLink = createHttpLink({
-  uri: 'http://localhost:3000/api/graphql',
+  uri: 'https://agent-back-office-one.vercel.app/api/graphql',
 });
 
 const authLink = setContext((_, { headers }) => {
-  // get the authentication token from local storage if it exists
   const token = getToken();
-
-  // return the headers to the context so httpLink can read them
   return {
     headers: {
       ...headers,
