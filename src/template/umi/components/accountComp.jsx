@@ -20,12 +20,10 @@ export const AccountComp = (props) => {
   return (
     <>
       <div className="ant-pro-form-login-top">
-        <div className="ant-pro-form-login-header">
-          <span className="ant-pro-form-login-title">
-            {loadingWallet ? <LoadingOutlined /> : balance} ฿
-          </span>
-        </div>
-        <div className="ant-pro-form-login-desc">
+        <h1 style={{ marginBottom: '24px', textAlign: 'center' }}>
+          {loadingWallet ? <LoadingOutlined /> : balance} ฿
+        </h1>
+        <h2 style={{ marginBottom: '24px', textAlign: 'center' }}>
           <Space>
             จำนวนเครดิต{' '}
             <Link href="#" onClick={() => CheckBalance()}>
@@ -39,7 +37,7 @@ export const AccountComp = (props) => {
               />{' '}
             </Link>
           </Space>
-        </div>
+        </h2>
       </div>
       <Button
         type="primary"

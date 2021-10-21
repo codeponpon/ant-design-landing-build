@@ -1,8 +1,7 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
-import { ProFormSelect } from '@ant-design/pro-form';
 import { SmileOutlined } from '@ant-design/icons';
-import { ConfigProvider, Image } from 'antd';
+import { ConfigProvider, Image, Select } from 'antd';
 import { BANKS } from '../gql/banks';
 
 const customizeRenderEmpty = () => (
@@ -18,13 +17,13 @@ const bankSort = (banks) => {
     const secondPriority = ['KTB', 'BAY', 'BBL', 'GSB'];
 
     const fPriorityBanks = banks.filter((bank) =>
-      firstPriority.includes(bank.code),
+      firstPriority.includes(bank.code)
     );
     const sPriorityBanks = banks.filter((bank) =>
-      secondPriority.includes(bank.code),
+      secondPriority.includes(bank.code)
     );
     const otherBanks = banks.filter(
-      (bank) => !firstPriority.concat(secondPriority).includes(bank.code),
+      (bank) => !firstPriority.concat(secondPriority).includes(bank.code)
     );
 
     return fPriorityBanks.concat(sPriorityBanks).concat(otherBanks);
@@ -33,58 +32,52 @@ const bankSort = (banks) => {
   return [];
 };
 
-export const BankSelector = () => {
+export const BankSelector = ({ bankAccount, setBank }) => {
   const { loading, error, data: dataMasterBanks } = useQuery(BANKS);
   let sortedBank = bankSort(dataMasterBanks?.banks);
-  console.log(sortedBank);
-  if (loading)
+
+  if (loading || error) {
     return (
       <ConfigProvider renderEmpty={loading && customizeRenderEmpty}>
-        <ProFormSelect
-          width="md"
+        <Select
+          name="bankAccountNo"
+          size="large"
+          style={{ width: '100%', marginBottom: '24px' }}
           placeholder="กำลังโหลดธนาคาร..."
-        ></ProFormSelect>
+          loading
+        />
       </ConfigProvider>
     );
+  }
+
+  const options = [];
+  sortedBank.map((bank, i) => {
+    options.push({
+      key: bank.code,
+      value: bank.code,
+      label: (
+        <div className="bank-img">
+          <Image width={24} src={bank.logoUrl} />
+          &nbsp; {bank.name}
+        </div>
+      ),
+    });
+  });
 
   return (
-    <ConfigProvider renderEmpty={customizeRenderEmpty}>
-      <ProFormSelect
-        width="md"
-        fieldProps={{
-          labelInValue: true,
-        }}
-        request={async () => {
-          return sortedBank.map((bank, i) => {
-            return {
-              label: bank.name,
-              value: bank.code,
-              key: bank.code,
-              logo: bank.logoUrl,
-            };
-          });
-        }}
-        fieldProps={{
-          optionItemRender(item) {
-            return (
-              <React.Fragment>
-                <div className="bank-img">
-                  <Image width={24} src={item.logo} />
-                  &nbsp; {item.label}
-                </div>
-              </React.Fragment>
-            );
-          },
-        }}
-        name="bank"
-        placeholder="กรุณาเลือกธนาคาร"
-        rules={[
-          {
-            required: true,
-            message: 'กรุณาเลือกธนาคาร!',
-          },
-        ]}
-      />
-    </ConfigProvider>
+    <Select
+      name="bankAccountNo"
+      size="large"
+      style={{ width: '100%', marginBottom: '24px' }}
+      placeholder="กรุณาเลือกธนาคาร"
+      rules={[
+        {
+          required: true,
+          message: 'กรุณาเลือกธนาคาร!',
+        },
+      ]}
+      options={options}
+      onSelect={(item) => setBank(item)}
+    ></Select>
   );
 };

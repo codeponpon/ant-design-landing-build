@@ -19,7 +19,6 @@ const LoginComp = (props) => {
 
   const onFinish = async (values) => {
     const { mobile, password } = values;
-    console.log(values);
 
     setLoading(true);
 
@@ -54,12 +53,7 @@ const LoginComp = (props) => {
 
   return (
     <Form initialValues={{ remember: true }} onFinish={onFinish}>
-      <div className="ant-pro-form-login-top">
-        <div className="ant-pro-form-login-header">
-          <span className="ant-pro-form-login-title">เข้าสู่ระบบ</span>
-        </div>
-        <div className="ant-pro-form-login-desc"></div>
-      </div>
+      <h1 style={{ marginBottom: '24px', textAlign: 'center' }}>เข้าสู่ระบบ</h1>
       <Form.Item
         name="mobile"
         rules={[

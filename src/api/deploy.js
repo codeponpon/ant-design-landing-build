@@ -27,6 +27,12 @@ async function deploy(ctx, next) {
   const libCredit = path.join(templateDir, 'libs', 'credit.js');
   const libWaitTime = path.join(templateDir, 'libs', 'waitTime.js');
   const libUseAuth = path.join(templateDir, 'libs', 'useAuth.js');
+  const libTracking = path.join(templateDir, 'libs', 'tracking.js');
+  const libGenerateUsername = path.join(
+    templateDir,
+    'libs',
+    'generateUsername.js'
+  );
 
   // Components
   const accountComp = path.join(templateDir, 'components', 'accountComp.jsx');
@@ -52,6 +58,9 @@ async function deploy(ctx, next) {
   const signInGql = path.join(templateDir, 'gql', 'signIn.js');
   const userMeGql = path.join(templateDir, 'gql', 'userMe.js');
   const walletGql = path.join(templateDir, 'gql', 'wallet.js');
+  const addContactGql = path.join(templateDir, 'gql', 'addContact.js');
+  const addTrackingGql = path.join(templateDir, 'gql', 'addTracking.js');
+  const addUserGql = path.join(templateDir, 'gql', 'addUser.js');
 
   const parameter = new Parameter({
     validateRoot: true,
@@ -121,6 +130,9 @@ async function deploy(ctx, next) {
   const signInContent = fs.readFileSync(signInGql, 'utf-8');
   const userMeContent = fs.readFileSync(userMeGql, 'utf-8');
   const walletContent = fs.readFileSync(walletGql, 'utf-8');
+  const addContactContent = fs.readFileSync(addContactGql, 'utf-8');
+  const addTrackingContent = fs.readFileSync(addTrackingGql, 'utf-8');
+  const addUserContent = fs.readFileSync(addUserGql, 'utf-8');
 
   // Library
   const libFormatIndexContent = fs.readFileSync(libFormatIndex, 'utf-8');
@@ -129,6 +141,11 @@ async function deploy(ctx, next) {
   const libCreditContent = fs.readFileSync(libCredit, 'utf-8');
   const libWaitTimeContent = fs.readFileSync(libWaitTime, 'utf-8');
   const libUseAuthContent = fs.readFileSync(libUseAuth, 'utf-8');
+  const libTrackingContent = fs.readFileSync(libTracking, 'utf-8');
+  const libGenerateUsernameContent = fs.readFileSync(
+    libGenerateUsername,
+    'utf-8'
+  );
 
   // Components
   const accountCompContent = fs.readFileSync(accountComp, 'utf-8');
@@ -144,6 +161,9 @@ async function deploy(ctx, next) {
     typeof deployData.files
   );
   const solidFiles = [
+    { file: 'src/gql/addContact.js', data: addContactContent },
+    { file: 'src/gql/addTracking.js', data: addTrackingContent },
+    { file: 'src/gql/addUser.js', data: addUserContent },
     { file: 'src/gql/banks.js', data: banksContent },
     { file: 'src/gql/gameProviders.js', data: gameProvidersContent },
     { file: 'src/gql/getPromotionLists.js', data: getPromotionListContent },
@@ -158,6 +178,8 @@ async function deploy(ctx, next) {
     { file: 'src/libs/credit.js', data: libCreditContent },
     { file: 'src/libs/waitTime.js', data: libWaitTimeContent },
     { file: 'src/libs/useAuth.js', data: libUseAuthContent },
+    { file: 'src/libs/tracking.js', data: libTrackingContent },
+    { file: 'src/libs/generateUsername.js', data: libGenerateUsernameContent },
     { file: 'src/components/accountComp.jsx', data: accountCompContent },
     { file: 'src/components/bankSelector.jsx', data: bankSelectorContent },
     { file: 'src/components/gameList.jsx', data: gameListCompContent },
