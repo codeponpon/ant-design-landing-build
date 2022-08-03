@@ -1,49 +1,40 @@
 import { Col } from 'antd';
-import { useQuery } from '@apollo/client';
-import { GAME_PROVIDERS } from '../gql/gameProviders';
+import { useEffect, useState } from 'react';
+import gameProviders from '../api/gameProviders';
 
 export const ProviderList = () => {
-  const { loading, error, data } = useQuery(GAME_PROVIDERS);
-  if (loading) return <p>Loading Providers...</p>;
-  if (error) return <p>Error :(</p>;
+  const [providers, setProviders] = useState([]);
 
-  const allGames = [];
-  data.gameProviders.map((item) => {
-    if (!allGames[item.gameType]) {
-      allGames[item.gameType] = [];
-      allGames[item.gameType].push(item);
-    } else {
-      allGames[item.gameType].push(item);
+  useEffect(async () => {
+    if (providers.length === 0) {
+      const { data } = await gameProviders();
+      console.log('Providers', data);
+      setProviders(data);
     }
-  });
+  }, []);
 
-  return Object.keys(allGames).map((key) =>
-    allGames[key].map((item, i) => {
-      return (
-        <Col
-          key={i.toString()}
-          md={6}
-          xs={24}
-          className="block content5-block-content"
-        >
-          <a href="#" className="content5-block-content">
-            <span>
-              <img
-                src={
-                  item.imagePath
-                    ? item.imagePath.match(/https:/g)
-                      ? item.imagePath
-                      : `http://${item.imagePath}`
-                    : 'https://t.alipayobjects.com/images/rmsweb/T11aVgXc4eXXXXXXXX.svg'
-                }
-                height="100%"
-                alt={item.name}
-              />
-            </span>
+  console.log('Providers', providers);
+  return providers.map((item) => {
+    return (
+      <Col
+        key={item.id}
+        md={6}
+        xs={24}
+        className="block content5-block-content"
+      >
+        <div className="title-wrapper">
+          <h2 name="title" className="title-h1 text-center">
             <p>{item.name}</p>
-          </a>
-        </Col>
-      );
-    }),
-  );
+          </h2>
+          <div name="content" className="title-content">
+            <a href="#" className="content5-block-content">
+              <span>
+                <img src={item.items[0].image} height="100%" alt={item.name} />
+              </span>
+            </a>
+          </div>
+        </div>
+      </Col>
+    );
+  });
 };
