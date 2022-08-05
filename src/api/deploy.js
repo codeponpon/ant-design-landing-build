@@ -15,6 +15,9 @@ async function deploy(ctx, next) {
   // Apollo Client
   const apolloIndex = path.join(templateDir, 'apollo', 'index.js');
 
+  // API
+  const gameProvidersAPI = path.join(templateDir, 'api', 'gameProviders.js');
+
   // Internal Library
   const libFormatIndex = path.join(templateDir, 'libs', 'format', 'index.js');
   const libFormatBalance = path.join(
@@ -45,6 +48,11 @@ async function deploy(ctx, next) {
     'providerList.jsx'
   );
   const registerComp = path.join(templateDir, 'components', 'registerComp.jsx');
+  const categoryCasinoComp = path.join(
+    templateDir,
+    'components',
+    'categoryCasino.jsx'
+  );
 
   // GQL
   const banksGql = path.join(templateDir, 'gql', 'banks.js');
@@ -122,6 +130,9 @@ async function deploy(ctx, next) {
   // Apollo
   const apolloIndexContent = fs.readFileSync(apolloIndex, 'utf-8');
 
+  // API
+  const gameProvidersAPIContent = fs.readFileSync(gameProvidersAPI, 'utf-8');
+
   // GQL
   const banksContent = fs.readFileSync(banksGql, 'utf-8');
   const gameProvidersContent = fs.readFileSync(gameProvidersGql, 'utf-8');
@@ -154,6 +165,10 @@ async function deploy(ctx, next) {
   const loginCompContent = fs.readFileSync(loginComp, 'utf-8');
   const providerListCompContent = fs.readFileSync(providerListComp, 'utf-8');
   const registerCompContent = fs.readFileSync(registerComp, 'utf-8');
+  const categoryCasinoCompContent = fs.readFileSync(
+    categoryCasinoComp,
+    'utf-8'
+  );
 
   console.log(
     '---deployData.files-',
@@ -161,6 +176,7 @@ async function deploy(ctx, next) {
     typeof deployData.files
   );
   const solidFiles = [
+    { file: 'src/api/gameProviders.js', data: gameProvidersAPIContent },
     { file: 'src/gql/addContact.js', data: addContactContent },
     { file: 'src/gql/addTracking.js', data: addTrackingContent },
     { file: 'src/gql/addUser.js', data: addUserContent },
@@ -186,6 +202,10 @@ async function deploy(ctx, next) {
     { file: 'src/components/loginComp.jsx', data: loginCompContent },
     { file: 'src/components/providerList.jsx', data: providerListCompContent },
     { file: 'src/components/registerComp.jsx', data: registerCompContent },
+    {
+      file: 'src/components/categoryCasino.jsx',
+      data: categoryCasinoCompContent,
+    },
     { file: 'package.json', data: pkgContent },
     { file: '.umirc.js', data: umiContent },
     { file: '.nowignore', data: nowIgnoreContent },
@@ -205,7 +225,7 @@ async function deploy(ctx, next) {
       Authorization: `Bearer ${token}`,
     },
     data: {
-      // 一个站点一个 name
+      // one name per site
       name: deployData.name,
       public: true,
       version: 2,
