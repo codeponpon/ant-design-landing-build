@@ -58,6 +58,11 @@ async function deploy(ctx, next) {
     'components',
     'categorySlot.jsx'
   );
+  const GamblingCategoryComp = path.join(
+    templateDir,
+    'components',
+    'GamblingCategory.jsx'
+  );
 
   // GQL
   const banksGql = path.join(templateDir, 'gql', 'banks.js');
@@ -175,6 +180,10 @@ async function deploy(ctx, next) {
     'utf-8'
   );
   const categorySlotCompContent = fs.readFileSync(categorySlotComp, 'utf-8');
+  const GamblingCategoryCompContent = fs.readFileSync(
+    GamblingCategoryComp,
+    'utf-8'
+  );
 
   console.log(
     '---deployData.files-',
@@ -215,6 +224,10 @@ async function deploy(ctx, next) {
     {
       file: 'src/components/categorySlot.jsx',
       data: categorySlotCompContent,
+    },
+    {
+      file: 'src/components/GamblingCategory.jsx',
+      data: GamblingCategoryCompContent,
     },
     { file: 'package.json', data: pkgContent },
     { file: '.umirc.js', data: umiContent },
