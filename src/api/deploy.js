@@ -48,16 +48,6 @@ async function deploy(ctx, next) {
     'providerList.jsx'
   );
   const registerComp = path.join(templateDir, 'components', 'registerComp.jsx');
-  const categoryCasinoComp = path.join(
-    templateDir,
-    'components',
-    'categoryCasino.jsx'
-  );
-  const categorySlotComp = path.join(
-    templateDir,
-    'components',
-    'categorySlot.jsx'
-  );
   const GamblingCategoryComp = path.join(
     templateDir,
     'components',
@@ -175,11 +165,6 @@ async function deploy(ctx, next) {
   const loginCompContent = fs.readFileSync(loginComp, 'utf-8');
   const providerListCompContent = fs.readFileSync(providerListComp, 'utf-8');
   const registerCompContent = fs.readFileSync(registerComp, 'utf-8');
-  const categoryCasinoCompContent = fs.readFileSync(
-    categoryCasinoComp,
-    'utf-8'
-  );
-  const categorySlotCompContent = fs.readFileSync(categorySlotComp, 'utf-8');
   const GamblingCategoryCompContent = fs.readFileSync(
     GamblingCategoryComp,
     'utf-8'
@@ -217,14 +202,6 @@ async function deploy(ctx, next) {
     { file: 'src/components/loginComp.jsx', data: loginCompContent },
     { file: 'src/components/providerList.jsx', data: providerListCompContent },
     { file: 'src/components/registerComp.jsx', data: registerCompContent },
-    {
-      file: 'src/components/categoryCasino.jsx',
-      data: categoryCasinoCompContent,
-    },
-    {
-      file: 'src/components/categorySlot.jsx',
-      data: categorySlotCompContent,
-    },
     {
       file: 'src/components/GamblingCategory.jsx',
       data: GamblingCategoryCompContent,
