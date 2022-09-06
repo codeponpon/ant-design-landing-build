@@ -12,13 +12,38 @@ async function deploy(ctx, next) {
   const umiTmp = path.join(templateDir, 'umirc');
   const nowIgnoreTmp = path.join(templateDir, 'nowignore');
 
+  // Stylesheet
+  const providerPageStyle = path.join(
+    templateDir,
+    'components',
+    'less',
+    'providerPage.less'
+  );
+
+  // Data Source
+  const providerDataSource = path.join(
+    templateDir,
+    'components',
+    'providerDataSource.js'
+  );
+
+  // Wrappers
+  const wrapAuth = path.join(templateDir, 'wrappers', 'auth.jsx');
+
   // Apollo Client
   const apolloIndex = path.join(templateDir, 'apollo', 'index.js');
 
   // API
   const gameProvidersAPI = path.join(templateDir, 'api', 'gameProviders.js');
+  const gameListAPI = path.join(templateDir, 'api', 'gameList.js');
 
   // Internal Library
+  const getMobileDetect = path.join(
+    templateDir,
+    'libs',
+    'getMobileDetect',
+    'index.js'
+  );
   const libFormatIndex = path.join(templateDir, 'libs', 'format', 'index.js');
   const libFormatBalance = path.join(
     templateDir,
@@ -38,6 +63,17 @@ async function deploy(ctx, next) {
   );
 
   // Components
+  const utilsComp = path.join(templateDir, 'components', 'utils.js');
+  const GameProviderComp = path.join(
+    templateDir,
+    'components',
+    'GameProvider.jsx'
+  );
+  const lobbyProviderComp = path.join(
+    templateDir,
+    'components',
+    'lobbyProvider.jsx'
+  );
   const accountComp = path.join(templateDir, 'components', 'accountComp.jsx');
   const bankSelector = path.join(templateDir, 'components', 'bankSelector.jsx');
   const gameListComp = path.join(templateDir, 'components', 'gameList.jsx');
@@ -52,6 +88,54 @@ async function deploy(ctx, next) {
     templateDir,
     'components',
     'GamblingCategory.jsx'
+  );
+  const ProvidersComp = path.join(templateDir, 'components', 'Providers.jsx');
+  const lobbyComp = path.join(templateDir, 'components', 'lobby.jsx');
+
+  const loadingComp = path.join(
+    templateDir,
+    'components',
+    'launchGame',
+    'loading.jsx'
+  );
+  const footerComp = path.join(
+    templateDir,
+    'components',
+    'launchGame',
+    'footer.jsx'
+  );
+  const displayComp = path.join(
+    templateDir,
+    'components',
+    'launchGame',
+    'display.jsx'
+  );
+  const launchGameIndexComp = path.join(
+    templateDir,
+    'components',
+    'launchGame',
+    'index.jsx'
+  );
+
+  // Pages
+  const providersPageComp = path.join(templateDir, 'pages', 'providers.jsx');
+  const lobbyPageComp = path.join(
+    templateDir,
+    'pages',
+    'lobby',
+    '[shortName].js'
+  );
+  const providerPageComp = path.join(
+    templateDir,
+    'pages',
+    'lobby',
+    'provider.js'
+  );
+  const launchGamePageComp = path.join(
+    templateDir,
+    'pages',
+    'lobby',
+    'launchGame.js'
   );
 
   // GQL
@@ -127,11 +211,18 @@ async function deploy(ctx, next) {
   const umiContent = nunjucks.render(umiTmp);
   const nowIgnoreContent = nunjucks.render(nowIgnoreTmp);
 
+  // Wrapper
+  const wrapAuthContent = fs.readFileSync(wrapAuth, 'utf-8');
+
+  // Stylescheet
+  const providerPageStyleContent = fs.readFileSync(providerPageStyle, 'utf-8');
+
   // Apollo
   const apolloIndexContent = fs.readFileSync(apolloIndex, 'utf-8');
 
   // API
   const gameProvidersAPIContent = fs.readFileSync(gameProvidersAPI, 'utf-8');
+  const gameListAPIContent = fs.readFileSync(gameListAPI, 'utf-8');
 
   // GQL
   const banksContent = fs.readFileSync(banksGql, 'utf-8');
@@ -146,6 +237,7 @@ async function deploy(ctx, next) {
   const addUserContent = fs.readFileSync(addUserGql, 'utf-8');
 
   // Library
+  const getMobileDetectContent = fs.readFileSync(getMobileDetect, 'utf-8');
   const libFormatIndexContent = fs.readFileSync(libFormatIndex, 'utf-8');
   const libFormatBalanceContent = fs.readFileSync(libFormatBalance, 'utf-8');
   const libAuthTokenContent = fs.readFileSync(libAuthToken, 'utf-8');
@@ -159,6 +251,7 @@ async function deploy(ctx, next) {
   );
 
   // Components
+  const utilsCompContent = fs.readFileSync(utilsComp, 'utf-8');
   const accountCompContent = fs.readFileSync(accountComp, 'utf-8');
   const bankSelectorContent = fs.readFileSync(bankSelector, 'utf-8');
   const gameListCompContent = fs.readFileSync(gameListComp, 'utf-8');
@@ -169,14 +262,43 @@ async function deploy(ctx, next) {
     GamblingCategoryComp,
     'utf-8'
   );
+  const ProvidersCompContent = fs.readFileSync(ProvidersComp, 'utf-8');
+  const lobbyCompContent = fs.readFileSync(lobbyComp, 'utf-8');
+  const loadingCompContent = fs.readFileSync(loadingComp, 'utf-8');
+  const footerCompContent = fs.readFileSync(footerComp, 'utf-8');
+  const displayCompContent = fs.readFileSync(displayComp, 'utf-8');
+  const launchGameIndexCompContent = fs.readFileSync(
+    launchGameIndexComp,
+    'utf-8'
+  );
+  const lobbyProviderCompContent = fs.readFileSync(lobbyProviderComp, 'utf-8');
+  const GameProviderCompContent = fs.readFileSync(GameProviderComp, 'utf-8');
+
+  // Pages
+  const providersPageCompContent = fs.readFileSync(providersPageComp, 'utf-8');
+  const lobbyPageCompContent = fs.readFileSync(lobbyPageComp, 'utf-8');
+  const providerPageCompContent = fs.readFileSync(providerPageComp, 'utf-8');
+  const launchGamePageCompContent = fs.readFileSync(
+    launchGamePageComp,
+    'utf-8'
+  );
+
+  // Data Source
+  const providerDataSourceContent = fs.readFileSync(
+    providerDataSource,
+    'utf-8'
+  );
 
   console.log(
     '---deployData.files-',
     deployData.files,
     typeof deployData.files
   );
+
   const solidFiles = [
+    { file: 'src/wrappers/auth.jsx', data: wrapAuthContent },
     { file: 'src/api/gameProviders.js', data: gameProvidersAPIContent },
+    { file: 'src/api/gameList.js', data: gameListAPIContent },
     { file: 'src/gql/addContact.js', data: addContactContent },
     { file: 'src/gql/addTracking.js', data: addTrackingContent },
     { file: 'src/gql/addUser.js', data: addUserContent },
@@ -188,6 +310,7 @@ async function deploy(ctx, next) {
     { file: 'src/gql/userMe.js', data: userMeContent },
     { file: 'src/gql/wallet.js', data: walletContent },
     { file: 'src/apollo/index.js', data: apolloIndexContent },
+    { file: 'src/libs/getMobileDetect/index.js', data: getMobileDetectContent },
     { file: 'src/libs/format/index.js', data: libFormatIndexContent },
     { file: 'src/libs/format/balance.js', data: libFormatBalanceContent },
     { file: 'src/libs/authToken.js', data: libAuthTokenContent },
@@ -196,6 +319,11 @@ async function deploy(ctx, next) {
     { file: 'src/libs/useAuth.js', data: libUseAuthContent },
     { file: 'src/libs/tracking.js', data: libTrackingContent },
     { file: 'src/libs/generateUsername.js', data: libGenerateUsernameContent },
+    { file: 'src/components/utils.js', data: utilsCompContent },
+    {
+      file: 'src/components/less/providerPage.less',
+      data: providerPageStyleContent,
+    },
     { file: 'src/components/accountComp.jsx', data: accountCompContent },
     { file: 'src/components/bankSelector.jsx', data: bankSelectorContent },
     { file: 'src/components/gameList.jsx', data: gameListCompContent },
@@ -206,6 +334,40 @@ async function deploy(ctx, next) {
       file: 'src/components/GamblingCategory.jsx',
       data: GamblingCategoryCompContent,
     },
+    { file: 'src/components/Providers.jsx', data: ProvidersCompContent },
+    { file: 'src/components/lobby.jsx', data: lobbyCompContent },
+    {
+      file: 'src/components/GameProvider.jsx',
+      data: GameProviderCompContent,
+    },
+    {
+      file: 'src/components/lobbyProvider.jsx',
+      data: lobbyProviderCompContent,
+    },
+    {
+      file: 'src/components/providerDataSource.jsx',
+      data: providerDataSourceContent,
+    },
+    {
+      file: 'src/components/launchGame/loading.jsx',
+      data: loadingCompContent,
+    },
+    {
+      file: 'src/components/launchGame/footer.jsx',
+      data: footerCompContent,
+    },
+    {
+      file: 'src/components/launchGame/display.jsx',
+      data: displayCompContent,
+    },
+    {
+      file: 'src/components/launchGame/index.jsx',
+      data: launchGameIndexCompContent,
+    },
+    { file: 'src/pages/lobby/launchGame.jsx', data: launchGamePageCompContent },
+    { file: 'src/pages/lobby/provider.js', data: providerPageCompContent },
+    { file: 'src/pages/lobby/[shortName].js', data: lobbyPageCompContent },
+    { file: 'src/pages/providers.jsx', data: providersPageCompContent },
     { file: 'package.json', data: pkgContent },
     { file: '.umirc.js', data: umiContent },
     { file: '.nowignore', data: nowIgnoreContent },

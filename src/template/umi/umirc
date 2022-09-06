@@ -2,9 +2,29 @@ export default {
   ssr: {},
   antd: {},
   exportStatic: {},
-  targets: {
-    ie: 11,
-  },
+  targets: { ie: 11 },
+  nodeModulesTransform: { type: 'none' },
+  routes: [
+    { exact: true, path: '/', component: '@/pages/index' },
+    { exact: true, path: '/providers', component: '@/pages/providers' },
+    {
+      exact: true,
+      path: '/lobby/launchGame',
+      component: '@/pages/lobby/launchGame',
+      // wrappers: ['@/wrappers/auth'],
+    },
+    {
+      exact: true,
+      path: '/lobby/provider',
+      component: '@/pages/lobby/provider',
+    },
+    {
+      exact: true,
+      path: '/lobby/:shortName',
+      component: '@/pages/lobby/[shortName]',
+      wrappers: ['@/wrappers/auth'],
+    },
+  ],
   fastRefresh: {},
   lessLoader: {
     rules: [
@@ -14,4 +34,5 @@ export default {
       },
     ],
   },
+  extraBabelPlugins: ['styled-components'],
 };

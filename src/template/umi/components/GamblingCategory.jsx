@@ -3,7 +3,7 @@ import { Col } from 'antd';
 import gameProviders from '../api/gameProviders';
 
 const GamblingCategory = (props) => {
-  const { name, block, columns = 3 } = props;
+  const { name, block, columns = 3, isProvider } = props;
   const [category, setCategory] = useState([]);
 
   useEffect(async () => {
@@ -22,7 +22,12 @@ const GamblingCategory = (props) => {
         className={`block ${block}-block-content`}
         style={{ marginRight: '10px' }}
       >
-        <a href="#" className={`${block}-block-content`}>
+        <a
+          href={
+            isProvider ? `/lobby/provider?shortName=${item.shortName}` : '#'
+          }
+          className={`${block}-block-content`}
+        >
           <span>
             {' '}
             <img src={item.image} height="100%" alt={item.name} />

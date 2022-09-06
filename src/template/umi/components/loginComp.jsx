@@ -5,15 +5,19 @@ import {
   LockOutlined,
   MobileOutlined,
   LoadingOutlined,
+  LoginOutlined,
 } from '@ant-design/icons';
 import { Link } from 'rc-scroll-anim';
 import { setToken, setUserMe, checkTokenExpire } from '../libs/authToken';
 import RegisterComp from './registerComp';
-import { SIGN_IN } from '../gql/signIn';
+import { signIn } from '../gql/signIn';
+import { isBrowser } from 'umi';
+import { graphUrl } from '../apollo';
+
+const { location = {} } = isBrowser() ? window : {};
 
 const LoginComp = (props) => {
   const { isMobile, registerHistory = false, ...attrs } = props;
-  const [signIn] = useMutation(SIGN_IN);
   const [loading, setLoading] = useState(false);
   const [registerChildrenDrawer, setRegisterChildrenDrawer] = useState(false);
 
@@ -23,25 +27,32 @@ const LoginComp = (props) => {
     setLoading(true);
 
     try {
-      const res = await signIn({
-        variables: {
-          data: {
-            username: mobile.replace(/\s/g, ''),
-            password: password.replace(/\s/g, ''),
-            typeAuth: 'userFront',
+      const res = await signIn(
+        {
+          variables: {
+            data: {
+              username: mobile.replace(/\s/g, ''),
+              password: password.replace(/\s/g, ''),
+              typeAuth: 'userFront',
+            },
           },
         },
-      });
-
-      if (res.data.signIn.__typename === 'SignInOutputSuccess') {
+        graphUrl
+      );
+      console.log('res', res);
+      if (res?.data && res.data.signIn.__typename === 'SignInOutputSuccess') {
         setUserMe(res.data.signIn.user.username);
         const chkExpire = checkTokenExpire(res.data.signIn.token);
         if (chkExpire) {
           setToken(res.data.signIn.token);
-          window.location.reload();
+          // location?.href = '/home';
+          location?.reload();
         }
       } else {
-        message.warning(res.data.signIn.messages);
+        const msg = res?.data
+          ? res.data.signIn.messages
+          : 'There is something went wrong for sign in';
+        message.warning(msg);
       }
     } catch (e) {
       console.log(e);
@@ -92,6 +103,7 @@ const LoginComp = (props) => {
           htmlType="submit"
           className="login-form-button"
           size="large"
+          icon={<LoginOutlined />}
           block
         >
           {loading ? <LoadingOutlined /> : 'เข้าสู่ระบบ'}
@@ -109,7 +121,7 @@ const LoginComp = (props) => {
               visible={registerChildrenDrawer}
               {...attrs}
             >
-              <RegisterComp loginHistory={true} />
+              <RegisterComp loginHistory />
             </Drawer>
           </Space>
         )}

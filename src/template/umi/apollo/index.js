@@ -2,8 +2,10 @@ import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { getToken } from '../libs/authToken';
 
+export const graphUrl = 'https://agent-back-office-one.vercel.app/api/graphql';
+
 const httpLink = createHttpLink({
-  uri: 'https://agent-back-office-one.vercel.app/api/graphql',
+  uri: graphUrl,
 });
 
 const authLink = setContext((_, { headers }) => {

@@ -1,6 +1,7 @@
-import gql from 'graphql-tag';
+import axios from 'axios';
+import { graphUrl } from '../apollo';
 
-export const SIGN_IN = gql`
+const SIGN_IN = `
   mutation signIn($data: SignInInput) {
     signIn(data: $data) {
       __typename
@@ -17,3 +18,18 @@ export const SIGN_IN = gql`
     }
   }
 `;
+
+export const signIn = async (variables, graphqlUrl) => {
+  try {
+    const res = await axios.post(`${graphqlUrl || graphUrl}`, {
+      query: SIGN_IN,
+      ...variables,
+    });
+    console.log('sign in', res);
+    if (res.status === 200) return res.data;
+  } catch (error) {
+    if (error instanceof Error) console.log(error.message);
+  }
+
+  return false;
+};

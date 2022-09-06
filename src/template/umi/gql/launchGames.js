@@ -1,4 +1,4 @@
-import { gql } from 'apollo-boost'
+import { gql } from 'apollo-boost';
 
 export const LAUNCH_GAMES = gql`
   query launchGames(
@@ -16,4 +16,4 @@ export const LAUNCH_GAMES = gql`
       url
     }
   }
-`
+`;
