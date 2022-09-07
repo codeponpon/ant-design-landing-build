@@ -34,6 +34,8 @@
     "apollo-boost": "^0.4.9",
     "axios": "^0.27.2",
     "babel-plugin-import": "^1.11.0",
+    "babel-plugin-react-bootstrap": "^0.0.2",
+    "bootstrap": "^5.2.0",
     "enquire-js": "^0.2.1",
     "graphql": "^15.6.1",
     "graphql-tag": "^2.12.5",
