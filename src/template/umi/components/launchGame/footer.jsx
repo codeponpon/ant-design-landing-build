@@ -72,7 +72,7 @@ const menuList = [
   {
     page: '/?type=กีฬา#Gambling8_0',
     gameType: 'SPORT',
-    src: 'https://zeagame.com/images/icon-huay.png',
+    src: 'https://zeagame.com/images/icon-sport.png',
     srcActive: 'tabicon-sport-active',
     alt: 'กีฬา',
     nameth: 'กีฬา',

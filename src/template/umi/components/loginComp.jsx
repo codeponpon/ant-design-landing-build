@@ -39,7 +39,6 @@ const LoginComp = (props) => {
         },
         graphUrl
       );
-      console.log('res', res);
       if (res?.data && res.data.signIn.__typename === 'SignInOutputSuccess') {
         setUserMe(res.data.signIn.user.username);
         const chkExpire = checkTokenExpire(res.data.signIn.token);
@@ -55,7 +54,6 @@ const LoginComp = (props) => {
         message.warning(msg);
       }
     } catch (e) {
-      console.log(e);
       message.error('เกิดข้อผิดพลาด! กรุณาทำรายใหม่อีกครั้ง');
     } finally {
       setLoading(false);

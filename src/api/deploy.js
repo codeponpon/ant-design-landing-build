@@ -13,6 +13,12 @@ async function deploy(ctx, next) {
   const nowIgnoreTmp = path.join(templateDir, 'nowignore');
 
   // Stylesheet
+  const customStyle = path.join(
+    templateDir,
+    'components',
+    'less',
+    'customStyle.less'
+  );
   const providerPageStyle = path.join(
     templateDir,
     'components',
@@ -216,6 +222,7 @@ async function deploy(ctx, next) {
 
   // Stylescheet
   const providerPageStyleContent = fs.readFileSync(providerPageStyle, 'utf-8');
+  const customStyleContent = fs.readFileSync(customStyle, 'utf-8');
 
   // Apollo
   const apolloIndexContent = fs.readFileSync(apolloIndex, 'utf-8');
@@ -323,6 +330,10 @@ async function deploy(ctx, next) {
     {
       file: 'src/components/less/providerPage.less',
       data: providerPageStyleContent,
+    },
+    {
+      file: 'src/components/less/customStyle.less',
+      data: customStyleContent,
     },
     { file: 'src/components/accountComp.jsx', data: accountCompContent },
     { file: 'src/components/bankSelector.jsx', data: bankSelectorContent },

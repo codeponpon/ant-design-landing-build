@@ -25,7 +25,6 @@ export const signIn = async (variables, graphqlUrl) => {
       query: SIGN_IN,
       ...variables,
     });
-    console.log('sign in', res);
     if (res.status === 200) return res.data;
   } catch (error) {
     if (error instanceof Error) console.log(error.message);

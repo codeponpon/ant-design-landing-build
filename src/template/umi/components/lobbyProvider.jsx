@@ -12,6 +12,7 @@ import { Nav20DataSource, Footer00DataSource } from './data.source';
 import { ProviderDataSource } from './providerDataSource';
 import './less/antMotionStyle.less';
 import './less/providerPage.less';
+import './less/customStyle.less';
 
 React.useLayoutEffect = React.useEffect;
 

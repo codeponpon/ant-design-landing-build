@@ -71,7 +71,6 @@ const ProviderList = (props) => {
       setProviders(allProvider);
 
       const blocks = Object.values(allProvider).map((item) => {
-        console.log(item);
         return getBlock({
           name: `block${item.id}`,
           img: item.image,
@@ -83,7 +82,6 @@ const ProviderList = (props) => {
         });
       });
 
-      console.log('allProvider', allProvider);
       setItems(blocks);
     }
   }, []);
