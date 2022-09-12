@@ -1,0 +1,125 @@
+#statement {
+  .nav-item {
+    background: linear-gradient(
+      40deg,
+      #da5969 0%,
+      #f16172 30%,
+      #f46374 70%,
+      #fb7c8b 100%
+    );
+  }
+  .card {
+    background: none;
+    border: 0;
+  }
+  .nav-tabs .nav-link {
+    border-radius: 5px;
+  }
+  .active {
+    background: none;
+  }
+  .container {
+    padding-bottom: 0;
+  }
+  nav {
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    margin-bottom: 10px;
+    text-align: center;
+    border-bottom: 0;
+    padding-bottom: 0;
+    .nav-item {
+      color: #fff;
+    }
+
+    a:nth-child(1) {
+      margin-left: 0;
+      margin-right: 5px;
+      border: 0;
+      color: #ffffff;
+      &.active,
+      &:hover {
+        color: #ffffff;
+        background: linear-gradient(
+          40deg,
+          #fb7c8b 0%,
+          #fa8491 30%,
+          #f88b98 70%,
+          #fda2ad 100%
+        );
+      }
+    }
+
+    a:nth-child(2) {
+      margin-left: 5px;
+      margin-right: 5px;
+      border: 0;
+      color: #ffffff;
+      &.active,
+      &:hover {
+        color: #ffffff;
+        background: linear-gradient(
+          40deg,
+          #fb7c8b 0%,
+          #fa8491 30%,
+          #f88b98 70%,
+          #fda2ad 100%
+        );
+      }
+    }
+
+    a:nth-child(3) {
+      margin-left: 5px;
+      margin-right: 0;
+      border: 0;
+      color: #ffffff;
+      &.active,
+      &:hover {
+        color: #ffffff;
+        background: linear-gradient(
+          40deg,
+          #fb7c8b 0%,
+          #fa8491 30%,
+          #f88b98 70%,
+          #fda2ad 100%
+        );
+      }
+    }
+  }
+
+  .list-statement {
+    margin-bottom: 15px;
+    border: 1px solid #f8f9fa63;
+    border-radius: 0;
+    .badge {
+      font-size: 16px;
+    }
+    .col-img {
+      background-color: #332f2f;
+      color: white;
+      display: grid;
+      grid-template-columns: 70px auto;
+      img {
+        width: 100%;
+        padding: 10%;
+      }
+    }
+
+    .row:nth-child(2) {
+      padding-top: 5px;
+      padding-bottom: 5px;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .row:nth-child(3) {
+      div {
+        &:nth-child(3) {
+          background: rgba(255, 255, 255, 0.2);
+        }
+      }
+    }
+  }
+}

@@ -25,6 +25,12 @@ async function deploy(ctx, next) {
     'less',
     'providerPage.less'
   );
+  const statementStyle = path.join(
+    templateDir,
+    'components',
+    'less',
+    'statement.less'
+  );
 
   // Data Source
   const providerDataSource = path.join(
@@ -122,6 +128,78 @@ async function deploy(ctx, next) {
     'launchGame',
     'index.jsx'
   );
+  const userAccountComp = path.join(
+    templateDir,
+    'components',
+    'user',
+    'Account.jsx'
+  );
+  const userPromotionComp = path.join(
+    templateDir,
+    'components',
+    'user',
+    'Promotion.jsx'
+  );
+  const turnOverComp = path.join(
+    templateDir,
+    'components',
+    'Turnover',
+    'index.jsx'
+  );
+  const turnOverStyledComp = path.join(
+    templateDir,
+    'components',
+    'Turnover',
+    'TurnoverStyled.jsx'
+  );
+  const promotionComp = path.join(
+    templateDir,
+    'components',
+    'Promotion',
+    'index.jsx'
+  );
+  const promotionDataComp = path.join(
+    templateDir,
+    'components',
+    'Promotion',
+    'PromotionData.jsx'
+  );
+  const promotionStyledComp = path.join(
+    templateDir,
+    'components',
+    'Promotion',
+    'PromotionStyled.jsx'
+  );
+  const statementIndexComp = path.join(
+    templateDir,
+    'components',
+    'Statement',
+    'index.jsx'
+  );
+  const statementAllComp = path.join(
+    templateDir,
+    'components',
+    'Statement',
+    'all.jsx'
+  );
+  const statementDepComp = path.join(
+    templateDir,
+    'components',
+    'Statement',
+    'deposit.jsx'
+  );
+  const statementWithComp = path.join(
+    templateDir,
+    'components',
+    'Statement',
+    'withdraw.jsx'
+  );
+  const statementListComp = path.join(
+    templateDir,
+    'components',
+    'Statement',
+    'list_statement.jsx'
+  );
 
   // Pages
   const providersPageComp = path.join(templateDir, 'pages', 'providers.jsx');
@@ -159,6 +237,7 @@ async function deploy(ctx, next) {
   const addContactGql = path.join(templateDir, 'gql', 'addContact.js');
   const addTrackingGql = path.join(templateDir, 'gql', 'addTracking.js');
   const addUserGql = path.join(templateDir, 'gql', 'addUser.js');
+  const useStatementGql = path.join(templateDir, 'gql', 'use-statement.js');
 
   const parameter = new Parameter({
     validateRoot: true,
@@ -223,6 +302,7 @@ async function deploy(ctx, next) {
   // Stylescheet
   const providerPageStyleContent = fs.readFileSync(providerPageStyle, 'utf-8');
   const customStyleContent = fs.readFileSync(customStyle, 'utf-8');
+  const statementStyleContent = fs.readFileSync(statementStyle, 'utf-8');
 
   // Apollo
   const apolloIndexContent = fs.readFileSync(apolloIndex, 'utf-8');
@@ -242,6 +322,7 @@ async function deploy(ctx, next) {
   const addContactContent = fs.readFileSync(addContactGql, 'utf-8');
   const addTrackingContent = fs.readFileSync(addTrackingGql, 'utf-8');
   const addUserContent = fs.readFileSync(addUserGql, 'utf-8');
+  const useStatementGqlContent = fs.readFileSync(useStatementGql, 'utf-8');
 
   // Library
   const getMobileDetectContent = fs.readFileSync(getMobileDetect, 'utf-8');
@@ -280,6 +361,24 @@ async function deploy(ctx, next) {
   );
   const lobbyProviderCompContent = fs.readFileSync(lobbyProviderComp, 'utf-8');
   const GameProviderCompContent = fs.readFileSync(GameProviderComp, 'utf-8');
+  const userAccountCompContent = fs.readFileSync(userAccountComp, 'utf-8');
+  const userPromotionCompContent = fs.readFileSync(userPromotionComp, 'utf-8');
+  const turnOverCompContent = fs.readFileSync(turnOverComp, 'utf-8');
+  const turnOverStyledCompContent = fs.readFileSync(
+    turnOverStyledComp,
+    'utf-8'
+  );
+  const promotionCompContent = fs.readFileSync(promotionComp, 'utf-8');
+  const promotionDataCompContent = fs.readFileSync(promotionDataComp, 'utf-8');
+  const promotionStyledCompContent = fs.readFileSync(
+    promotionStyledComp,
+    'utf-8'
+  );
+  const statementCompContent = fs.readFileSync(statementIndexComp, 'utf-8');
+  const statementAllCompContent = fs.readFileSync(statementAllComp, 'utf-8');
+  const statementDepCompContent = fs.readFileSync(statementDepComp, 'utf-8');
+  const statementWithCompContent = fs.readFileSync(statementWithComp, 'utf-8');
+  const statementListCompContent = fs.readFileSync(statementListComp, 'utf-8');
 
   // Pages
   const providersPageCompContent = fs.readFileSync(providersPageComp, 'utf-8');
@@ -316,6 +415,7 @@ async function deploy(ctx, next) {
     { file: 'src/gql/signIn.js', data: signInContent },
     { file: 'src/gql/userMe.js', data: userMeContent },
     { file: 'src/gql/wallet.js', data: walletContent },
+    { file: 'src/gql/use-statement.js', data: useStatementGqlContent },
     { file: 'src/apollo/index.js', data: apolloIndexContent },
     { file: 'src/libs/getMobileDetect/index.js', data: getMobileDetectContent },
     { file: 'src/libs/format/index.js', data: libFormatIndexContent },
@@ -334,6 +434,10 @@ async function deploy(ctx, next) {
     {
       file: 'src/components/less/customStyle.less',
       data: customStyleContent,
+    },
+    {
+      file: 'src/components/less/statement.less',
+      data: statementStyleContent,
     },
     { file: 'src/components/accountComp.jsx', data: accountCompContent },
     { file: 'src/components/bankSelector.jsx', data: bankSelectorContent },
@@ -374,6 +478,54 @@ async function deploy(ctx, next) {
     {
       file: 'src/components/launchGame/index.jsx',
       data: launchGameIndexCompContent,
+    },
+    {
+      file: 'src/components/user/Account.jsx',
+      data: userAccountCompContent,
+    },
+    {
+      file: 'src/components/user/Promotion.jsx',
+      data: userPromotionCompContent,
+    },
+    {
+      file: 'src/components/Turnover/index.jsx',
+      data: turnOverCompContent,
+    },
+    {
+      file: 'src/components/Turnover/TurnoverStyled.jsx',
+      data: turnOverStyledCompContent,
+    },
+    {
+      file: 'src/components/Promotion/index.jsx',
+      data: promotionCompContent,
+    },
+    {
+      file: 'src/components/Promotion/PromotionData.jsx',
+      data: promotionDataCompContent,
+    },
+    {
+      file: 'src/components/Promotion/PromotionStyled.jsx',
+      data: promotionStyledCompContent,
+    },
+    {
+      file: 'src/components/Statement/index.jsx',
+      data: statementCompContent,
+    },
+    {
+      file: 'src/components/Statement/all.jsx',
+      data: statementAllCompContent,
+    },
+    {
+      file: 'src/components/Statement/deposit.jsx',
+      data: statementDepCompContent,
+    },
+    {
+      file: 'src/components/Statement/withdraw.jsx',
+      data: statementWithCompContent,
+    },
+    {
+      file: 'src/components/Statement/list_statement.jsx',
+      data: statementListCompContent,
     },
     { file: 'src/pages/lobby/launchGame.jsx', data: launchGamePageCompContent },
     { file: 'src/pages/lobby/provider.js', data: providerPageCompContent },
